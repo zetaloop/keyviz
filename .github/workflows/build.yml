@@ -54,6 +54,7 @@ jobs:
           cd build/windows
           zip -r ../windows-build.zip .
           cd ..
+        fi
       shell: bash
 
     - name: Upload Artifacts
