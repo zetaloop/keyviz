@@ -34,7 +34,7 @@ jobs:
         if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
           flutter build linux
         elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
-          flutter build macos --release --no-codesign
+          flutter build macos
         elif [[ "${{ matrix.os }}" == "windows-latest" ]]; then
           flutter build windows
         fi
