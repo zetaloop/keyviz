@@ -8,7 +8,7 @@ jobs:
     strategy:
       matrix:
         # os: [ubuntu-latest, windows-latest, macos-latest]
-        os: [ubuntu-latest]
+        os: [windows-latest]
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -44,21 +44,21 @@ jobs:
       run: |
         if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
           pushd build/linux/x64/release/bundle
-          zip -r ../../../../linux-build.zip .
+          zip -r ../../../../keyviz-release-linux.zip .
           popd
         elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
           cd build/macos
-          zip -r ../macos-build.zip .
+          zip -r ../keyviz-release-macos.zip .
           cd ..
         elif [[ "${{ matrix.os }}" == "windows-latest" ]]; then
           cd build/windows
-          zip -r ../windows-build.zip .
+          zip -r ../keyviz-release-windows.zip .
           cd ..
         fi
       shell: bash
 
     - name: Upload Artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.os }}-build
-        path: build/*.zip
+        path: build/keyviz-release-*
