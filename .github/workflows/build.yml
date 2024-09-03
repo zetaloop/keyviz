@@ -1,0 +1,55 @@
+name: Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        channel: stable
+
+    - name: Install dependencies
+      run: flutter pub get
+
+    - name: Build for ${{ matrix.os }}
+      run: |
+        if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
+          flutter build linux
+        elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
+          flutter build macos --release --no-codesign
+        elif [[ "${{ matrix.os }}" == "windows-latest" ]]; then
+          flutter build windows
+        fi
+
+    - name: Zip entire build directory
+      run: |
+        if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
+          cd build/linux
+          zip -r ../linux-build.zip .
+          cd ..
+        elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
+          cd build/macos
+          zip -r ../macos-build.zip .
+          cd ..
+        elif [[ "${{ matrix.os }}" == "windows-latest" ]]; then
+          cd build/windows
+          zip -r ../windows-build.zip .
+          cd ..
+      shell: bash
+
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: ${{ matrix.os }}-build
+        path: build/*.zip
