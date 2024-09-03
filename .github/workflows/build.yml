@@ -20,7 +20,8 @@ jobs:
         channel: stable
 
     - name: Install common dependencies
-      run: flutter pub get
+      run: |
+        flutter pub upgrade
 
     - name: Install Linux dependencies
       if: matrix.os == 'ubuntu-latest'
