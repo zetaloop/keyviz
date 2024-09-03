@@ -50,8 +50,11 @@ jobs:
           zip -r ../../../../keyviz-release-linux.zip .
           popd
         elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
-          pushd build/macos
-          zip -r ../keyviz-release-macos.zip .
+          pushd build/macos/Build/Products/Release
+          mkdir dmg_temp
+          cp -R keyviz.app dmg_temp/
+          hdiutil create -volname Keyviz -srcfolder dmg_temp -ov -format UDZO keyviz-release-macos.dmg
+          mv keyviz-release-macos.dmg ../../../../
           popd
         elif [[ "${{ matrix.os }}" == "windows-latest" ]]; then
           pushd build/windows/x64/runner/Release
@@ -63,5 +66,5 @@ jobs:
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
-        name: ${{ matrix.os }}-build
+        name: ${{ matrix.os }}
         path: build/keyviz-release-*
