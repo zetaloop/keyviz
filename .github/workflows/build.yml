@@ -32,9 +32,6 @@ jobs:
       with:
         channel: stable
 
-    - name: Install project dependencies
-      run: flutter pub get
-
     - name: Build for ${{ matrix.os }}
       run: |
         if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
