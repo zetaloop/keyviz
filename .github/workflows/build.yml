@@ -7,8 +7,7 @@ jobs:
   build:
     strategy:
       matrix:
-        # os: [ubuntu-latest, windows-latest, macos-latest]
-        os: [macos-latest]
+        os: [ubuntu-latest, windows-latest, macos-latest]
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -21,7 +20,8 @@ jobs:
           apt update
           apt install -y clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libstdc++-12-dev
           apt install -y libappindicator3-dev
-        # elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
+        elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
+          brew install create-dmg
         elif [[ "${{ matrix.os }}" == "windows-latest" ]]; then
           choco install -y zip
         fi
@@ -53,7 +53,13 @@ jobs:
           pushd build/macos/Build/Products/Release
           mkdir dmg_temp
           cp -R keyviz.app dmg_temp/
-          hdiutil create -volname Keyviz -srcfolder dmg_temp -ov -format UDZO keyviz-release-macos.dmg
+          # hdiutil create -volname Keyviz -srcfolder dmg_temp -ov -format UDZO keyviz-release-macos.dmg
+          create-dmg \
+            --volname "Keyviz" \
+            --window-size 600 400 \
+            --icon "keyviz.app" 150 200 \
+            --app-drop-link 450 200 \
+            keyviz-release-macos.dmg dmg_temp
           mv keyviz-release-macos.dmg ../../../../
           popd
         elif [[ "${{ matrix.os }}" == "windows-latest" ]]; then
