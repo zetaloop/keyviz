@@ -39,8 +39,9 @@ jobs:
         elif [[ "${{ matrix.os }}" == "windows-latest" ]]; then
           flutter build windows
         fi
+      shell: bash
 
-    - name: Zip entire build directory
+    - name: Pack releases
       run: |
         if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
           pushd build/linux/x64/release/bundle
@@ -57,7 +58,7 @@ jobs:
         fi
       shell: bash
 
-    - name: Upload Artifacts
+    - name: Upload artifacts
       uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.os }}-build
