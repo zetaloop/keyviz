@@ -16,11 +16,16 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Install platform dependencies
-      if: matrix.os == 'ubuntu-latest'
       run: |
-        sudo apt-get update
-        sudo apt-get install -y clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libstdc++-12-dev
-        sudo apt-get install -y libappindicator3-dev
+        if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
+          apt update
+          apt install -y clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libstdc++-12-dev
+          apt install -y libappindicator3-dev
+        # elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
+        elif [[ "${{ matrix.os }}" == "windows-latest" ]]; then
+          choco install -y zip
+        fi
+      shell: bash
 
     - name: Set up Flutter
       uses: subosito/flutter-action@v2
@@ -48,13 +53,13 @@ jobs:
           zip -r ../../../../keyviz-release-linux.zip .
           popd
         elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
-          cd build/macos
+          pushd build/macos
           zip -r ../keyviz-release-macos.zip .
-          cd ..
+          popd
         elif [[ "${{ matrix.os }}" == "windows-latest" ]]; then
-          cd build/windows
-          zip -r ../keyviz-release-windows.zip .
-          cd ..
+          pushd build/windows/x64/runner/Release
+          zip -r ../../../../keyviz-release-windows.zip .
+          popd
         fi
       shell: bash
 
