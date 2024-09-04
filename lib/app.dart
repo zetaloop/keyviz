@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'config/theme.dart';
 import 'providers/key_event.dart';
@@ -16,6 +17,12 @@ class KeyvizApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: "Keyviz",
+      locale: const Locale('zh', 'CN'),
+      supportedLocales: const [Locale('zh', 'CN')],
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: ThemeMode.system,
