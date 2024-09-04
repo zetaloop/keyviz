@@ -43,8 +43,8 @@ class ErrorView extends StatelessWidget {
                     ),
                     const ColumnGap(),
                     Text(
-                      "Cannot register keyboard/mouse listener! "
-                      "Please quit the app from the system tray.",
+                      "无法注册键鼠侦听器！"
+                      "请从系统托盘菜单退出软件。",
                       style: context.textTheme.labelLarge?.copyWith(
                         color: context.colorScheme.error,
                       ),
