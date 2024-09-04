@@ -1,0 +1,76 @@
+name: Build
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Install platform dependencies
+      run: |
+        if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
+          sudo apt update
+          sudo apt install -y clang cmake ninja-build pkg-config libgtk-3-dev liblzma-dev libstdc++-12-dev
+          sudo apt install -y libappindicator3-dev
+        elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
+          brew install create-dmg
+        elif [[ "${{ matrix.os }}" == "windows-latest" ]]; then
+          choco install -y zip
+        fi
+      shell: bash
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        channel: stable
+
+    - name: Build for ${{ matrix.os }}
+      run: |
+        if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
+          flutter build linux
+        elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
+          flutter build macos
+        elif [[ "${{ matrix.os }}" == "windows-latest" ]]; then
+          flutter build windows
+        fi
+      shell: bash
+
+    - name: Pack releases
+      run: |
+        if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
+          pushd build/linux/x64/release/bundle
+          zip -r ../../../../keyviz-release-linux.zip .
+          popd
+        elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
+          pushd build/macos/Build/Products/Release
+          mkdir dmg_temp
+          cp -R keyviz.app dmg_temp/
+          # hdiutil create -volname Keyviz -srcfolder dmg_temp -ov -format UDZO keyviz-release-macos.dmg
+          create-dmg \
+            --volname "Keyviz" \
+            --window-size 600 400 \
+            --icon "keyviz.app" 150 200 \
+            --app-drop-link 450 200 \
+            keyviz-release-macos.dmg dmg_temp
+          mv keyviz-release-macos.dmg ../../../../
+          popd
+        elif [[ "${{ matrix.os }}" == "windows-latest" ]]; then
+          pushd build/windows/x64/runner/Release
+          zip -r ../../../../keyviz-release-windows.zip .
+          popd
+        fi
+      shell: bash
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ matrix.os }}
+        path: build/keyviz-release-*
