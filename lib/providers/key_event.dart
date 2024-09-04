@@ -815,18 +815,18 @@ class KeyEventProvider extends ChangeNotifier with TrayListener {
         items: [
           MenuItem(
             key: "toggle",
-            label: _visualizeEvents ? "✗ Turn Off" : "✓ Turn On",
+            label: _visualizeEvents ? "✗ 关闭" : "✓ 开启",
           ),
           MenuItem(
             key: "settings",
-            label: "Settings",
-            toolTip: "Open settings window",
+            label: "设置",
+            toolTip: "打开设置窗口",
           ),
           MenuItem.separator(),
           MenuItem(
             key: "quit",
-            label: "Quit",
-            toolTip: "Close Keyviz",
+            label: "退出",
+            toolTip: "关闭 Keyviz",
           ),
         ],
       ),
