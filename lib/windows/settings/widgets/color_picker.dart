@@ -187,7 +187,7 @@ class _ColorPickerState extends State<ColorPicker> {
                         : VuesaxIcons.clipboard,
                     color: context.colorScheme.tertiary,
                   ),
-                  tooltip: _clipboardCopied ? "Copied" : "Copy",
+                  tooltip: _clipboardCopied ? "已复制" : "复制",
                 ),
               ],
             ),
