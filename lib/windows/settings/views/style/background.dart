@@ -16,12 +16,12 @@ class BackgroundView extends StatelessWidget {
       selector: (_, keyStyle) => keyStyle.backgroundEnabled,
       builder: (context, enabled, _) {
         return XExpansionTile(
-          title: "Background",
+          title: "背景",
           children: [
             SubPanelItemGroup(
               items: [
                 RawSubPanelItem(
-                  title: "Enable",
+                  title: "开启",
                   child: XSwitch(
                     value: enabled,
                     onChange: (value) {
@@ -31,7 +31,7 @@ class BackgroundView extends StatelessWidget {
                 ),
                 RawColorInputSubPanelItem(
                   enabled: enabled,
-                  label: "Background Color",
+                  label: "背景颜色",
                   defaultValue: context.keyStyle.backgroundColor,
                   onChanged: (color) {
                     context.keyStyle.backgroundColor = color;
@@ -41,7 +41,7 @@ class BackgroundView extends StatelessWidget {
             ),
             const VerySmallColumnGap(),
             SubPanelItem(
-              title: "Opacity",
+              title: "透明度",
               enabled: enabled,
               child: Selector<KeyStyleProvider, double>(
                 selector: (_, keyStyle) => keyStyle.backgroundOpacity,
@@ -65,7 +65,7 @@ class BackgroundView extends StatelessWidget {
                         const VerySmallColumnGap(),
                         SubPanelItem(
                           enabled: enabled,
-                          title: "Rounded Corner",
+                          title: "圆角",
                           child: Selector<KeyStyleProvider, double>(
                             selector: (_, keyStyle) => keyStyle.cornerSmoothing,
                             builder: (context, cornerSmoothing, _) {

@@ -5,35 +5,41 @@ import 'package:keyviz/domain/vault/vault.dart';
 
 // base preset of the keycap
 enum KeyCapStyle {
-  minimal,
-  flat,
-  elevated,
-  plastic,
-  mechanical;
-  // retro;
+  minimal("极简"),
+  flat("扁平"),
+  elevated("凸起"),
+  plastic("塑料"),
+  mechanical("机械");
+  // retro("复古");
+
+  const KeyCapStyle(this.label);
+  final String label;
 
   @override
-  String toString() => name.capitalize();
+  // String toString() => name.capitalize();
+  String toString() => label;
 }
 
 // text capitalization
 enum TextCap {
-  upper("TT"),
-  capitalize("Tt"),
-  lower("tt");
+  upper("TT", "全大写"),
+  capitalize("Tt", "首字母大写"),
+  lower("tt", "全小写");
 
-  const TextCap(this.symbol);
+  const TextCap(this.symbol, this.label);
   final String symbol;
+  final String label;
 
   @override
-  String toString() => name.capitalize();
+  // String toString() => name.capitalize();
+  String toString() => label;
 }
 
 // modifier text length
 enum ModifierTextLength {
-  iconOnly("Icon Only"),
-  shortLength("Short Text"),
-  fullLength("Full Text");
+  iconOnly("图标"),
+  shortLength("缩写"),
+  fullLength("全称");
 
   const ModifierTextLength(this.label);
   final String label;
@@ -44,22 +50,30 @@ enum ModifierTextLength {
 
 // alignment in vertical axis
 enum VerticalAlignment {
-  top(VuesaxIcons.alignTop),
-  center(VuesaxIcons.alignVertically),
-  bottom(VuesaxIcons.alignBottom);
+  top(VuesaxIcons.alignTop, "上"),
+  center(VuesaxIcons.alignVertically, "中"),
+  bottom(VuesaxIcons.alignBottom, "下");
 
-  const VerticalAlignment(this.iconName);
+  const VerticalAlignment(this.iconName, this.label);
   final String iconName;
+  final String label;
+
+  @override
+  String toString() => label;
 }
 
 // alignment in horizontal axis
 enum HorizontalAlignment {
-  left(VuesaxIcons.alignLeft),
-  center(VuesaxIcons.alignHorizontally),
-  right(VuesaxIcons.alignRight);
+  left(VuesaxIcons.alignLeft, "左"),
+  center(VuesaxIcons.alignHorizontally, "中"),
+  right(VuesaxIcons.alignRight, "右");
 
-  const HorizontalAlignment(this.iconName);
+  const HorizontalAlignment(this.iconName, this.label);
   final String iconName;
+  final String label;
+
+  @override
+  String toString() => label;
 }
 
 // mouse animation type

@@ -24,7 +24,7 @@ class StyleTabView extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(bottom: defaultPadding * .5),
           child: PanelItem(
-            title: "Preset",
+            title: "预设",
             action: Selector<KeyStyleProvider, KeyCapStyle>(
               selector: (_, keyStyle) => keyStyle.keyCapStyle,
               builder: (context, preset, _) {
