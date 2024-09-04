@@ -28,6 +28,13 @@ class SideBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final children = <Widget>[];
     const tabs = SettingsTab.values;
+    const tabNamesCN = {
+      'general': '常规',
+      'mouse': '鼠标',
+      'keycap': '键帽',
+      'appearance': '外观',
+      'about': '关于',
+    };
 
     for (int i = 0; i < tabs.length; i++) {
       final tab = tabs[i];
@@ -51,7 +58,7 @@ class SideBar extends StatelessWidget {
       children.add(
         _IconButton(
           icon: tab.icon,
-          tooltip: tab.name,
+          tooltip: tabNamesCN[tab.name] ?? tab.name,
           onTap: () => onChange(tab),
           selected: currentTab == tab,
         ),
