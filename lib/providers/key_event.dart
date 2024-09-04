@@ -53,8 +53,12 @@ enum VisualizationHistoryMode {
   @override
   String toString() {
     return this == VisualizationHistoryMode.none
-        ? "None"
-        : "${name.capitalize()}ly";
+        ? "不显示"
+        : {
+              'vertical': '垂直显示',
+              'horizontal': '水平显示',
+            }[name] ??
+            "${name.capitalize()}ly";
   }
 }
 
