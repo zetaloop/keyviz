@@ -99,7 +99,7 @@ class _ColorPickerState extends State<ColorPicker> {
           Row(
             children: [
               Text(
-                widget.title ?? "Color Picker",
+                widget.title ?? "取色器",
                 style: context.textTheme.titleSmall?.copyWith(
                   color: context.colorScheme.tertiary,
                 ),
