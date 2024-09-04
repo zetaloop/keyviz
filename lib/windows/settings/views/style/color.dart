@@ -75,7 +75,7 @@ class ColorView extends StatelessWidget {
             builder: (context, differentColors, _) => Row(
               children: [
                 Text(
-                  "普通键",
+                  "常规键",
                   style: context.textTheme.titleSmall?.copyWith(
                     color: context.colorScheme.tertiary,
                   ),
