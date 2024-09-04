@@ -37,9 +37,9 @@ enum TextCap {
 
 // modifier text length
 enum ModifierTextLength {
-  iconOnly("图标"),
-  shortLength("缩写"),
-  fullLength("全称");
+  iconOnly("仅图标"),
+  shortLength("缩写名"),
+  fullLength("完整名");
 
   const ModifierTextLength(this.label);
   final String label;
@@ -57,9 +57,6 @@ enum VerticalAlignment {
   const VerticalAlignment(this.iconName, this.label);
   final String iconName;
   final String label;
-
-  @override
-  String toString() => label;
 }
 
 // alignment in horizontal axis
@@ -71,9 +68,6 @@ enum HorizontalAlignment {
   const HorizontalAlignment(this.iconName, this.label);
   final String iconName;
   final String label;
-
-  @override
-  String toString() => label;
 }
 
 // mouse animation type

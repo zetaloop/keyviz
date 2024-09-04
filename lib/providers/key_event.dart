@@ -64,14 +64,18 @@ enum VisualizationHistoryMode {
 
 // keycap animation style
 enum KeyCapAnimationType {
-  none,
-  fade,
-  wham,
-  grow,
-  slide;
+  none("无"),
+  fade("淡入"),
+  wham("聚焦"),
+  grow("放大"),
+  slide("滑动");
+
+  const KeyCapAnimationType(this.label);
+  final String label;
 
   @override
-  String toString() => name.capitalize();
+  // String toString() => name.capitalize();
+  String toString() => label;
 }
 
 extension on MouseEvent {

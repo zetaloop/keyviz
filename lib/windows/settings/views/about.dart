@@ -150,7 +150,7 @@ class AboutView extends StatelessWidget {
                     const VerySmallColumnGap(),
                     Text(
                       "你好 👋，我是 Keyviz 的开发者 Rahul Mula。"
-                      "我是一名在线课程讲师。\n\n"
+                      "我也是一名线上讲师，在网上教授课程。\n\n"
                       "在录制教学视频时，我经常需要向观众展示我的键盘操作。"
                       "因此，我决定开发按键可视化软件 Keyviz，"
                       "并将其分享给大家，希望能帮助到有类似需求的朋友们。",
