@@ -69,7 +69,13 @@ enum MouseClickAnimation {
   filled;
 
   @override
-  String toString() => name.capitalize();
+  String toString() =>
+      {
+        'static': '静态',
+        'focus': '聚合',
+        'filled': '实心',
+      }[name] ??
+      name.capitalize();
 }
 
 // style provider of the keycap visualization
