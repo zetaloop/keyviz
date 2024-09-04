@@ -120,7 +120,8 @@ git clone https://github.com/zetaloop/keyviz.git .
 flutter build windows
 ```
 
-此外，汉化作者 zetaloop 隆重宣布——我完成了一个 [GitHub 工作流](https://github.com/zetaloop/keyviz/blob/main/.github/workflows/build.yml) 可以自动编译所有平台的 Keyviz，若有需要请自取～
+此外，汉化作者 zetaloop 隆重宣布——我完成了一个 [GitHub 工作流](https://github.com/zetaloop/keyviz/blob/main/.github/workflows/build.yml)，<br>
+它可以自动编译所有平台的 Keyviz，若有需要请自取喵。
 
 </br>
 
