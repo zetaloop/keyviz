@@ -64,18 +64,16 @@ enum HorizontalAlignment {
 
 // mouse animation type
 enum MouseClickAnimation {
-  static,
-  focus,
-  filled;
+  static("静态"),
+  focus("聚合"),
+  filled("实心");
+
+  const MouseClickAnimation(this.label);
+  final String label;
 
   @override
-  String toString() =>
-      {
-        'static': '静态',
-        'focus': '聚合',
-        'filled': '实心',
-      }[name] ??
-      name.capitalize();
+  // String toString() => name.capitalize();
+  String toString() => label;
 }
 
 // style provider of the keycap visualization

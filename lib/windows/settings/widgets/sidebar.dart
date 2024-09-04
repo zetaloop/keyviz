@@ -4,14 +4,15 @@ import 'package:keyviz/config/config.dart';
 import 'package:keyviz/windows/shared/shared.dart';
 
 enum SettingsTab {
-  general(VuesaxIcons.cogWheel),
-  mouse(VuesaxIcons.mouse),
-  keycap(VuesaxIcons.keyboard),
-  appearance(VuesaxIcons.monitor),
-  about(VuesaxIcons.more);
+  general(VuesaxIcons.cogWheel, "常规"),
+  mouse(VuesaxIcons.mouse, "鼠标"),
+  keycap(VuesaxIcons.keyboard, "键帽"),
+  appearance(VuesaxIcons.monitor, "外观"),
+  about(VuesaxIcons.more, "关于");
 
-  const SettingsTab(this.icon);
+  const SettingsTab(this.icon, this.label);
   final String icon;
+  final String label;
 }
 
 class SideBar extends StatelessWidget {
@@ -28,13 +29,6 @@ class SideBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final children = <Widget>[];
     const tabs = SettingsTab.values;
-    const tabNamesCN = {
-      'general': '常规',
-      'mouse': '鼠标',
-      'keycap': '键帽',
-      'appearance': '外观',
-      'about': '关于',
-    };
 
     for (int i = 0; i < tabs.length; i++) {
       final tab = tabs[i];
@@ -58,7 +52,8 @@ class SideBar extends StatelessWidget {
       children.add(
         _IconButton(
           icon: tab.icon,
-          tooltip: tabNamesCN[tab.name] ?? tab.name,
+          // tooltip: tab.name,
+          tooltip: tab.label,
           onTap: () => onChange(tab),
           selected: currentTab == tab,
         ),
