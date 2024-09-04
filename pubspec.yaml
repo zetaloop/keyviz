@@ -11,6 +11,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+    sdk: flutter
 
   # cross-platform HID (Human Input Device) listener
   hid_listener: ^2.0.1
