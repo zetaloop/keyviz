@@ -49,11 +49,11 @@ class BorderView extends StatelessWidget {
                       const VerySmallColumnGap(),
                       SubPanelItem(
                         enabled: enabled,
-                        title: "普通键",
+                        title: "常规键",
                         child: SizedBox(
                           width: defaultPadding * 10,
                           child: RawColorInputSubPanelItem(
-                            label: "普通键边框颜色",
+                            label: "常规键边框颜色",
                             defaultValue: context.keyStyle.borderColor,
                             onChanged: (color) {
                               context.keyStyle.borderColor = color;
