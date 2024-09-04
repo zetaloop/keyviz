@@ -271,7 +271,7 @@ class _RawColorInputSubPanelItemState extends State<RawColorInputSubPanelItem> {
         const Spacer(),
         IconButton(
           onPressed: _toggleColorSwatches,
-          tooltip: "Swatches",
+          tooltip: "调色盘",
           icon: const SvgIcon.chevronDown(size: defaultPadding * .32),
         ),
       ],
