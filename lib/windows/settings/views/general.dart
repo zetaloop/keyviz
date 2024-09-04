@@ -59,7 +59,7 @@ class GeneralTabView extends StatelessWidget {
         PanelItem(
           asRow: false,
           title: "可视化开关快捷键",
-          subtitle: "按下快捷键可以切换按键可视化功能的开启关闭",
+          subtitle: "按下这个快捷键来切换按键可视化的开启关闭",
           action: HotkeyInput(
             initialValue: context.keyEvent.keyvizToggleShortcut,
             onChanged: (value) => context.keyEvent.keyvizToggleShortcut = value,

@@ -33,7 +33,8 @@ class LayoutView extends StatelessWidget {
                       builder: (context, verticalAlignment, _) {
                         return XIconButton(
                           icon: value.iconName,
-                          tooltip: value.name,
+                          // tooltip: value.name,
+                          tooltip: value.label,
                           onTap: () {
                             context.keyStyle.verticalAlignment = value;
                           },
@@ -62,7 +63,8 @@ class LayoutView extends StatelessWidget {
                       builder: (context, horizontalAlignment, _) {
                         return XIconButton(
                           icon: value.iconName,
-                          tooltip: value.name,
+                          // tooltip: value.name,
+                          tooltip: value.label,
                           onTap: () {
                             context.keyStyle.horizontalAlignment = value;
                           },
