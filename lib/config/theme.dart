@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'style.dart';
@@ -10,10 +12,11 @@ const lightGrey = Color(0xffe6e6e6);
 const lighterGrey = Color(0xfff2f2f2);
 
 // text styles
-const _baseTextStyle = TextStyle(
+final _baseTextStyle = TextStyle(
   color: darkerGrey,
   height: 1.25,
   fontFamily: "IBM Plex Sans",
+  fontFamilyFallback: Platform.isWindows ? ['DengXian'] : null,
 );
 final _titleStyle = _baseTextStyle.copyWith(
   fontSize: 18,
@@ -48,6 +51,7 @@ final lightTheme = ThemeData(
     background: lightGrey,
   ),
   fontFamily: "IBM Plex Sans",
+  fontFamilyFallback: Platform.isWindows ? ['DengXian'] : null,
   textTheme: TextTheme(
     // title
     titleLarge: _titleStyle,
