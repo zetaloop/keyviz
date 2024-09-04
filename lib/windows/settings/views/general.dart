@@ -34,7 +34,7 @@ class GeneralTabView extends StatelessWidget {
             asRow: false,
             enabled: filterHotkeys,
             title: "忽略按键",
-            subtitle: "跳过以下修饰键开头的任何按键动作",
+            subtitle: "忽略以下修饰键开头的任何按键动作",
             action: const _IgnoreKeyOptions(),
           ),
         ),
@@ -59,7 +59,7 @@ class GeneralTabView extends StatelessWidget {
         PanelItem(
           asRow: false,
           title: "可视化开关快捷键",
-          subtitle: "按这个快捷键可以切换按键显示的开启关闭",
+          subtitle: "按下快捷键可以切换按键可视化功能的开启关闭",
           action: HotkeyInput(
             initialValue: context.keyEvent.keyvizToggleShortcut,
             onChanged: (value) => context.keyEvent.keyvizToggleShortcut = value,
