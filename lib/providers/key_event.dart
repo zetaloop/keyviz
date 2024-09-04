@@ -46,20 +46,20 @@ enum ModifierKey {
 
 // key visualization history mode
 enum VisualizationHistoryMode {
-  none,
-  vertical,
-  horizontal;
+  none("不显示"),
+  vertical('垂直显示'),
+  horizontal('水平显示');
+
+  const VisualizationHistoryMode(this.label);
+  final String label;
 
   @override
-  String toString() {
-    return this == VisualizationHistoryMode.none
-        ? "不显示"
-        : {
-              'vertical': '垂直显示',
-              'horizontal': '水平显示',
-            }[name] ??
-            "${name.capitalize()}ly";
-  }
+  // String toString() {
+  //   return this == VisualizationHistoryMode.none
+  //       ? "None"
+  //       : "${name.capitalize()}ly";
+  // }
+  String toString() => label;
 }
 
 // keycap animation style
