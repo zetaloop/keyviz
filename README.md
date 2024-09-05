@@ -20,7 +20,7 @@ This is the community Chinese localized version of Keyviz, please visit [mulaRah
 
 功能强大且简单易用：
 
-- 可以忽略打字输入，只显示 <kbd>Cmd</kbd> + <kbd>K</kbd> 之类的快捷键 **（默认）**
+- 可以忽略打字输入，只显示 <kbd>Cmd</kbd> + <kbd>K</kbd> 之类的快捷键<b>（默认）</b>
 - 自由选择将按键显示在屏幕上哪个位置
 - 可以设定按键显示的停留时间
 - 有多种入场、出场动画可选
