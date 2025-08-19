@@ -69,11 +69,11 @@ This is the community Chinese localized version of Keyviz, please visit [mulaRah
   <summary>🍎 MacOS</summary>
 
   ### 🔒 权限
-  
-  Keyviz 需要 **输入监视** 和 **辅助功能** 权限，请在设置中允许。
+
+  Keyviz 需要 **输入监控** 和 **辅助功能** 权限，请在设置中允许。
   </br>
   ```
-  系统设置 > 隐私与安全性 > 输入监视/辅助功能
+  系统设置 > 隐私与安全性 > 输入监控/辅助功能
   ```
 
   </br>
