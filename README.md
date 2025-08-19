@@ -86,7 +86,7 @@ This is the community Chinese localized version of Keyviz, please visit [mulaRah
 
   <summary>🐧 Linux</summary>
 
-  ### v2.x.x Requirements
+  ### v2.x.x 的要求
    ```bash
   sudo apt-get install libayatana-appindicator3-dev
   ```
@@ -95,12 +95,12 @@ This is the community Chinese localized version of Keyviz, please visit [mulaRah
   sudo apt-get install appindicator3-0.1 libappindicator3-dev
   ```
 
-  ### Install debian package
+  ### 安装 Debian 软件包
   ```bash
   sudo apt install ./keyviz.deb
   ```
-  or
-  ### Install RPM
+  或
+  ### 安装 RPM 软件包
   ```bash
   sudo rpm -i app.rpm
   ```
