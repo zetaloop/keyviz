@@ -41,7 +41,7 @@ class BackgroundView extends StatelessWidget {
             ),
             const VerySmallColumnGap(),
             SubPanelItem(
-              title: "透明度",
+              title: "不透明度",
               enabled: enabled,
               child: Selector<KeyStyleProvider, double>(
                 selector: (_, keyStyle) => keyStyle.backgroundOpacity,
