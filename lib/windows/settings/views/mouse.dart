@@ -85,12 +85,10 @@ class MouseTabView extends StatelessWidget {
         ),
         const Divider(),
         PanelItem(
-          title: "Drag Threshold",
-          subtitle:
-              "Minimum distance to show Drag event. Set to a higher value "
-              "to avoid accidental drags.",
+          title: "拖动阈值",
+          subtitle: "显示拖动事件的最小移动距离，设大一点可以避免误触发",
           action: XNumberInput(
-            title: "Drag Threshold",
+            title: "拖动阈值",
             suffix: "px",
             defaultValue: context.keyEvent.dragThreshold.toInt(),
             onChanged: (value) {
