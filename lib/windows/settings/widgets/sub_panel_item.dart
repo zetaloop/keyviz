@@ -135,7 +135,7 @@ class _RawInputSubPanelItemState extends State<RawInputSubPanelItem> {
                 onTapOutside: _onChanged,
                 style: textStyle,
                 textAlign: TextAlign.end,
-                decoration: const InputDecoration.collapsed(hintText: "font"),
+                decoration: const InputDecoration.collapsed(hintText: "字号"),
                 textAlignVertical: TextAlignVertical.top,
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],

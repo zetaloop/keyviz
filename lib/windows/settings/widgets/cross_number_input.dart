@@ -56,7 +56,7 @@ class _XNumberInputState extends State<XNumberInput> {
           onTapOutside: _onChanged,
           style: textStyle,
           textAlign: TextAlign.end,
-          decoration: const InputDecoration.collapsed(hintText: "font"),
+          decoration: const InputDecoration.collapsed(hintText: "像素值"),
           textAlignVertical: TextAlignVertical.top,
           keyboardType: TextInputType.number,
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
