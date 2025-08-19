@@ -76,6 +76,13 @@ This is the community Chinese localized version of Keyviz, please visit [mulaRah
   系统设置 > 隐私与安全性 > 输入监控/辅助功能
   ```
 
+  ### 🗑️ 应用提示损坏
+
+  执行这个命令来解除隔离属性。
+  ```
+  xattr -rd com.apple.quarantine /Applications/keyviz.app
+  ```
+
   </br>
 
 </details>
