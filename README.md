@@ -31,7 +31,7 @@ This is the community Chinese localized version of Keyviz, please visit [mulaRah
 
 前往 [**Github 发行版**](https://github.com/zetaloop/keyviz/releases) 页面下载最新汉化版，进行安装或直接解压即可使用。
 
-以下是各平台的更多安装渠道与使用要求：
+此外，以下是各平台的更多安装渠道与使用要求：
 
 <details>
 
@@ -137,6 +137,6 @@ flutter build windows
 
 # 💖 支持
 
-Keyviz 完全免费，依靠您的慷慨捐助来支持开发。您的支持能让我投入更多时间和精力完善这款软件。
+Keyviz 完全免费，依靠您的慷慨捐助来支持开发。您的支持能让作者投入更多时间和精力完善这款软件。
 
 赞助原作者：<kbd>[GitHub Sponsors](https://github.com/sponsors/mulaRahul)</kbd> <kbd>[Open Collective](https://opencollective.com/keyviz)</kbd>
