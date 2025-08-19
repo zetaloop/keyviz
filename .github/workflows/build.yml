@@ -31,7 +31,7 @@ jobs:
       uses: subosito/flutter-action@v2
       with:
         channel: stable
-        flutter-version: '3.19.6'
+        flutter-version: '3.32.8'
 
     - name: Build for ${{ matrix.os }}
       run: |
