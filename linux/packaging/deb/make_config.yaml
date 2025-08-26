@@ -1,0 +1,15 @@
+display_name: Keyviz
+package_name: keyviz
+icon: assets/logo.png
+generic_name: Keypress Visualizer
+categories:
+  - Development
+  - Utility
+startup_notify: true
+
+maintainer:
+  name: zetaloop
+  email: zetaloop@outlook.com
+priority: optional
+section: x11
+installed_size: 66666 # who cares

@@ -47,14 +47,18 @@ jobs:
     - name: Pack releases
       run: |
         if [[ "${{ matrix.os }}" == "ubuntu-latest" ]]; then
-          pushd build/linux/x64/release/bundle
-          zip -r ../../../../keyviz-release-linux.zip .
-          popd
+          export PATH="$PWD/linux/packaging/rpm/tools:$PATH"
+          chmod +x linux/packaging/rpm/tools/rpmbuild
+          dart pub global activate fastforge
+          ~/.pub-cache/bin/fastforge package --platform linux --targets deb,rpm
+          ver_dir="$(dirname "$(find dist -maxdepth 2 -type f -name '*.deb' -print -quit)")"
+          mkdir -p build
+          cp "$ver_dir"/*.deb build/keyviz-release-linux.deb
+          cp "$ver_dir"/*.rpm build/keyviz-release-linux.rpm
         elif [[ "${{ matrix.os }}" == "macos-latest" ]]; then
           pushd build/macos/Build/Products/Release
           mkdir dmg_temp
           cp -R keyviz.app dmg_temp/
-          # hdiutil create -volname Keyviz -srcfolder dmg_temp -ov -format UDZO keyviz-release-macos.dmg
           create-dmg \
             --volname "Keyviz" \
             --window-size 600 400 \
@@ -74,4 +78,5 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: ${{ matrix.os }}
-        path: build/keyviz-release-*
+        path: |
+          build/keyviz-release-*

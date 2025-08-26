@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Replace x.y.z-alpha with x.y.z~alpha
+
+set -euo pipefail
+args=("$@")
+
+for i in "${!args[@]}"; do
+  if [[ "${args[$i]}" == *.spec ]]; then
+    spec="${args[$i]}"
+    perl -0777 -pe 's/^(Version:\s*\d+\.\d+\.\d+)-([A-Za-z0-9._+^~]+)/$1~$2/m' -i "$spec"
+    break
+  fi
+done
+
+exec /usr/bin/rpmbuild "${args[@]}"
