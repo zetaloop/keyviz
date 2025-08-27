@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:ui' as ui;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +10,6 @@ import 'package:window_size/window_size.dart';
 import 'package:tray_manager/tray_manager.dart';
 import 'package:window_manager/window_manager.dart';
 
-import 'package:keyviz/config/config.dart';
 import 'package:keyviz/domain/services/raw_keyboard_mouse.dart';
 import 'package:keyviz/domain/vault/vault.dart';
 
@@ -197,6 +197,29 @@ class KeyEventProvider extends ChangeNotifier with TrayListener {
 
   Screen get _currentScreen => _screens[_screenIndex];
 
+  Rect get _allScreensFrame {
+    if (_screens.isEmpty) return const Rect.fromLTWH(0, 0, 0, 0);
+    double left = _screens.first.frame.left;
+    double top = _screens.first.frame.top;
+    double right = _screens.first.frame.right;
+    double bottom = _screens.first.frame.bottom;
+    for (final s in _screens) {
+      if (s.frame.left < left) left = s.frame.left;
+      if (s.frame.top < top) top = s.frame.top;
+      if (s.frame.right > right) right = s.frame.right;
+      if (s.frame.bottom > bottom) bottom = s.frame.bottom;
+    }
+    return Rect.fromLTRB(left, top, right, bottom);
+  }
+
+  Rect get _referenceFrame => _screenIndex >= 0 ? _currentScreen.frame : _allScreensFrame;
+
+  double get _windowDevicePixelRatio =>
+      ui.PlatformDispatcher.instance.implicitView?.devicePixelRatio ??
+      (ui.PlatformDispatcher.instance.views.isNotEmpty
+          ? ui.PlatformDispatcher.instance.views.first.devicePixelRatio
+          : 1.0);
+
   Map<String, Map<int, KeyEventData>> get keyboardEvents => _keyboardEvents;
   int get screenIndex => _screenIndex;
   List<Screen> get screens => _screens;
@@ -334,12 +357,13 @@ class KeyEventProvider extends ChangeNotifier with TrayListener {
     // visualizer toggle
     if (!_visualizeEvents) return;
     // process mouse event
-    event.x -= _currentScreen.frame.left;
+    event.x -= _referenceFrame.left;
     if (!Platform.isMacOS) {
-      event.y -= _currentScreen.frame.top;
+      event.y -= _referenceFrame.top;
 
-      event.x /= _currentScreen.scaleFactor;
-      event.y /= _currentScreen.scaleFactor;
+      final scale = _screenIndex >= 0 ? _currentScreen.scaleFactor : _windowDevicePixelRatio;
+      event.x /= scale;
+      event.y /= scale;
     } else {
       event.y -= _macOSMouseOriginOffset.dy;
     }
@@ -904,10 +928,15 @@ class KeyEventProvider extends ChangeNotifier with TrayListener {
   }
 
   Map<String, dynamic> get toJson => {
-        _JsonKeys.screenFrame: [
-          _screens[_screenIndex].frame.width,
-          _screens[_screenIndex].frame.height,
-        ],
+        _JsonKeys.screenFrame: _screenIndex >= 0
+            ? [
+                _screens[_screenIndex].frame.width,
+                _screens[_screenIndex].frame.height,
+              ]
+            : [
+                _screenIndex,
+                _screenIndex,
+              ],
         _JsonKeys.filterHotkeys: _filterHotkeys,
         _JsonKeys.ignoreKeys: {
           ModifierKey.control.name: _ignoreKeys[ModifierKey.control],
@@ -1004,38 +1033,51 @@ class KeyEventProvider extends ChangeNotifier with TrayListener {
   _setDisplay(List? frame) async {
     _screens.addAll(await getScreenList());
 
-    if (frame != null) {
-      final index = _screens.indexWhere(
-        (screen) =>
-            screen.frame.width == frame[0] && screen.frame.height == frame[1],
-      );
-
-      if (index != -1) _screenIndex = index;
+    if (frame != null && frame.length >= 1) {
+      if (frame[0] == -1) {
+        _screenIndex = -1;
+      } else if (frame[0] == -2) {
+        _screenIndex = -2;
+      } else {
+        final index = _screens.indexWhere(
+          (screen) =>
+              screen.frame.width == frame[0] && screen.frame.height == frame[1],
+        );
+        if (index != -1) _screenIndex = index;
+      }
     }
 
     if (Platform.isMacOS) {
       _macOSMouseOriginOffset =
-          _screens[0].frame.bottomLeft - _currentScreen.frame.bottomLeft;
+          _screens[0].frame.bottomLeft - _referenceFrame.bottomLeft;
     }
 
-    setWindowFrame(_currentScreen.frame);
-
-    windowManager.show();
+    if (!Platform.isMacOS && _screenIndex < 0) {
+      await windowManager.setFullScreen(false);
+      await windowManager.hide();
+      setWindowFrame(_referenceFrame);
+      await windowManager.show();
+    } else {
+      setWindowFrame(_referenceFrame);
+      windowManager.show();
+    }
   }
 
   _changeDisplay() async {
     if (Platform.isMacOS) {
       _macOSMouseOriginOffset =
-          _screens[0].frame.bottomLeft - _currentScreen.frame.bottomLeft;
-      setWindowFrame(_currentScreen.frame);
+          _screens[0].frame.bottomLeft - _referenceFrame.bottomLeft;
+      setWindowFrame(_referenceFrame);
     } else {
       await windowManager.setFullScreen(false);
       await windowManager.hide();
 
-      setWindowFrame(_currentScreen.frame);
+      setWindowFrame(_referenceFrame);
       // simulate delay for above
       await Future.delayed(Durations.extralong2);
-      await windowManager.setFullScreen(true);
+      if (_screenIndex >= 0) {
+        await windowManager.setFullScreen(true);
+      }
       await windowManager.show();
     }
     notifyListeners();

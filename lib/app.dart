@@ -7,7 +7,7 @@ import 'providers/key_event.dart';
 import 'providers/key_style.dart';
 import 'windows/error/error.dart';
 import 'windows/settings/settings.dart';
-import 'windows/key_visualizer/key_visualizer.dart';
+import 'windows/key_visualizer/display_aware_visualizer.dart';
 import 'windows/mouse_visualizer/mouse_visualizer.dart';
 
 class KeyvizApp extends StatelessWidget {
@@ -39,7 +39,7 @@ class KeyvizApp extends StatelessWidget {
               fit: StackFit.expand,
               children: [
                 ErrorView(),
-                KeyVisualizer(),
+                DisplayAwareVisualizer(),
                 SettingsWindow(),
                 MouseVisualizer(),
               ],

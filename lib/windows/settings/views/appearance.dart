@@ -25,11 +25,19 @@ class AppearanceTabView extends StatelessWidget {
               selector: (_, keyEvent) => keyEvent.screenIndex,
               builder: (context, value, _) => XDropdown<int>(
                 value: value,
-                options: List.generate(
-                  context.keyEvent.screens.length,
-                  (i) => i,
-                ),
-                labelBuilder: (option) => "显示器 ${option + 1}",
+                options: [
+                  -1,
+                  -2,
+                  ...List.generate(
+                    context.keyEvent.screens.length,
+                    (i) => i,
+                  )
+                ],
+                labelBuilder: (option) => option == -1
+                    ? "合并显示器"
+                    : option == -2
+                        ? "每个显示器"
+                        : "显示器 ${option + 1}",
                 onChanged: (value) => context.keyEvent.screenIndex = value,
               ),
             ),
