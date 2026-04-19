@@ -1,4 +1,6 @@
 use std::{path::PathBuf, sync::Mutex};
+#[cfg(target_os = "linux")]
+use std::process::Command;
 
 use tauri::{Manager, PhysicalPosition, PhysicalSize};
 
@@ -6,6 +8,36 @@ use crate::app::state::AppState;
 
 const MONITOR_MODE_MERGED: &str = "__keyviz_monitor_merged__";
 const MONITOR_MODE_EACH: &str = "__keyviz_monitor_each__";
+
+#[cfg(target_os = "linux")]
+fn get_linux_scale_factor() -> f64 {
+    if let Some(scale) = std::env::var("GDK_SCALE")
+        .ok()
+        .and_then(|v| v.parse::<f64>().ok())
+        .filter(|v| *v > 0.0)
+    {
+        return scale;
+    }
+
+    if let Ok(output) = Command::new("xrdb").arg("-query").output() {
+        if output.status.success() {
+            if let Ok(text) = String::from_utf8(output.stdout) {
+                for line in text.lines() {
+                    let Some(value) = line.strip_prefix("Xft.dpi:\t").or_else(|| line.strip_prefix("Xft.dpi:")) else {
+                        continue;
+                    };
+                    if let Ok(dpi) = value.trim().parse::<f64>() {
+                        if dpi > 0.0 {
+                            return dpi / 96.0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    1.0
+}
 
 fn get_app_base_dir() -> Option<PathBuf> {
     #[cfg(target_os = "linux")]
@@ -102,7 +134,14 @@ pub fn set_main_window_monitor(app: tauri::AppHandle, monitor_name: String) {
 
             // Update AppState
             app_state.monitor_name = Some(monitor_name.clone());
-            app_state.monitor_scale = window.scale_factor().unwrap_or(1.0);
+            #[cfg(target_os = "linux")]
+            {
+                app_state.monitor_scale = get_linux_scale_factor();
+            }
+            #[cfg(not(target_os = "linux"))]
+            {
+                app_state.monitor_scale = window.scale_factor().unwrap_or(1.0);
+            }
             app_state.monitor_position = (min_x, min_y);
             return;
         }
@@ -112,6 +151,9 @@ pub fn set_main_window_monitor(app: tauri::AppHandle, monitor_name: String) {
         if let Some(monitor) = target_monitor {
             let position = monitor.position();
             let size = monitor.size();
+            #[cfg(target_os = "linux")]
+            let scale = get_linux_scale_factor();
+            #[cfg(not(target_os = "linux"))]
             let scale = monitor.scale_factor();
 
             // Update AppState
