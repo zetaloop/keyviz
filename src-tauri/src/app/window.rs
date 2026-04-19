@@ -1,4 +1,7 @@
 pub fn config_window(window: &tauri::WebviewWindow) {
+    #[cfg(target_os = "linux")]
+    window.show().expect("Failed to show window");
+
     window
         .set_ignore_cursor_events(true)
         .expect("Failed to set ignore cursor events");
@@ -50,5 +53,6 @@ pub fn config_window(window: &tauri::WebviewWindow) {
         }
     }
 
+    #[cfg(not(target_os = "linux"))]
     window.show().expect("Failed to show window");
 }
